@@ -95,21 +95,27 @@ def create_3d_patch(dicom_file_path, middle_point, patch_size=(20, 500, 500)):
     # Define the patch list
     patches = []
     paths = []
+    #Get heigth, width of the image, create 3 patches like 0 to height/3, height/3 to 2*height/3, 2*height/3 to height
+    height, width = img_data.shape[1], img_data.shape[2]
+    patch_1 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, 0:int(height/3), y-400:y+400]
+    patch_2 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, int(height/3):int(2*height/3), y-400:y+400]   
+    patch_3 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, int(2*height/3):int(height), y-400:y+400]
 
-    patch_1 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, x:x + patch_size_x, y:y + patch_size_y]
-    print("Patch 1 shape:", patch_1.shape)
-    patch_2 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, x - patch_size_x:x, y:y + patch_size_y]
-    print("Patch 2 shape:", patch_2.shape)
-    patch_3 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, x:x + patch_size_x, y - patch_size_y:y]
-    print("Patch 3 shape:", patch_3.shape)
-    patch_4 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, x - patch_size_x:x, y - patch_size_y:y]
-    print("Patch 4 shape:", patch_4.shape)
+
+
+    # patch_1 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, x:x + patch_size_x, y:y + patch_size_y]
+    # print("Patch 1 shape:", patch_1.shape)
+    # patch_2 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, x - patch_size_x:x, y:y + patch_size_y]
+    # print("Patch 2 shape:", patch_2.shape)
+    # patch_3 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, x:x + patch_size_x, y - patch_size_y:y]
+    # print("Patch 3 shape:", patch_3.shape)
+    # patch_4 = img_data[middle_z - patch_size_z // 2:middle_z + patch_size_z // 2, x - patch_size_x:x, y - patch_size_y:y]
+    # print("Patch 4 shape:", patch_4.shape)
     print("Patches created successfully")
     # Append the patches to the list
     patches.append(patch_1)
     patches.append(patch_2)
     patches.append(patch_3)
-    patches.append(patch_4)
     
     #Save the patches
     for i, patch in enumerate(patches):
